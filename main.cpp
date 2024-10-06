@@ -52,16 +52,27 @@ class Movie
         Review* getHead() const { return head; }
 };
 
-Review& generateReview(ifstream&);
+Review generateReview(ifstream&);
 double randomRating();
+void stackReview(Review*&, Review&);
 
 int main()
 {
     vector<Movie> movieList {};
 
     Review* movie1Head = nullptr;
-
-
+    ifstream finMovie1("movieReviews1.txt");
+    try
+    {
+        if (!finMovie1.good())
+            throw "I/O error";
+    }
+    catch (const char* e)
+    {
+        cout << e << '\n';
+        return 1;
+    }
+    generateReview(finMovie1);
 
     Movie movie1 {"Movie 1", movie1Head};
 
@@ -69,12 +80,14 @@ int main()
     return 0;
 }
 
-Review& generateReview(ifstream& fin)
+Review generateReview(ifstream& fin)
 {
-    Review aReview {};
+    Review* aReview = new Review {};
 
-    aReview.rating = randomRating();
+    aReview->rating = randomRating();
+    getline(fin, aReview->comments);
 
+    return *aReview;
 }
 
 double randomRating()
@@ -82,4 +95,14 @@ double randomRating()
     srand(time(0));
 
     return (rand() % 41 + 10) / 10.0;
+}
+
+void stackReview(Review*& head, Review& aReview)
+{
+    if (head == nullptr)
+        head = &aReview;
+    else
+    {
+        aReview.next
+    }
 }
