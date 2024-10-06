@@ -44,14 +44,18 @@ class Movie
 
         // Setter
         void setTitle(string theTitle) { title = theTitle; }
+        void setHead(Review* hd) { head = hd; }
 
         // Getter
+        string getTitle() const { return title; }
         Review* getHead() const { return head; }
 };
 
 int main()
 {
     vector<Movie> movieList {};
+    Movie movie1 {'Movie 1'};
+
 
     return 0;
 }
