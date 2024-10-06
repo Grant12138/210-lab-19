@@ -14,16 +14,30 @@ struct Review
     Review* next;
 
     Review() : rating(-1.0), comments("No Review"), next(nullptr) {}
-    ~Review() = default;
+    ~Review() = default; // Memory management handled in the Movie class
 };
 
 class Movie
 {
     private:
         string title;
-        Review* review;
+        Review* head;
     public:
+        // Constructor & Destructor
+        Movie() : title("N/A"), head(nullptr) {}
+        ~Movie()
+        {
+            Review* current = head;
+            while (current != nullptr)
+            {
+                head = current->next;
+                delete current;
+                current = head;
+            }
+        }
 
+        // Setters
+        void setTitle(string theTitle) { title = theTitle; }
 };
 
 int main()
