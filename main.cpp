@@ -54,7 +54,12 @@ class Movie
 int main()
 {
     vector<Movie> movieList {};
-    Movie movie1 {'Movie 1'};
+
+    Review* movie1Head = nullptr;
+    R
+
+
+    Movie movie1 {"Movie 1", movie1Head};
 
 
     return 0;
