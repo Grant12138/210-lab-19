@@ -4,8 +4,9 @@
 * Compiler: Apple clang version 16.0.0
 */
 #include <iostream>
-#include <random>
+#include <ctime>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 struct Review
@@ -51,16 +52,34 @@ class Movie
         Review* getHead() const { return head; }
 };
 
+Review& generateReview(ifstream&);
+double randomRating();
+
 int main()
 {
     vector<Movie> movieList {};
 
     Review* movie1Head = nullptr;
-    R
+
 
 
     Movie movie1 {"Movie 1", movie1Head};
 
 
     return 0;
+}
+
+Review& generateReview(ifstream& fin)
+{
+    Review aReview {};
+
+    aReview.rating = randomRating();
+
+}
+
+double randomRating()
+{
+    srand(time(0));
+
+    return (rand() % 41 + 10) / 10.0;
 }
