@@ -5,6 +5,7 @@
 */
 #include <iostream>
 #include <random>
+#include <vector>
 using namespace std;
 
 struct Review
@@ -25,6 +26,11 @@ class Movie
     public:
         // Constructor & Destructor
         Movie() : title("N/A"), head(nullptr) {}
+        Movie(string theTitle, Review* hd = nullptr)
+        {
+            title = theTitle;
+            head = hd;
+        }
         ~Movie()
         {
             Review* current = head;
@@ -36,13 +42,16 @@ class Movie
             }
         }
 
-        // Setters
+        // Setter
         void setTitle(string theTitle) { title = theTitle; }
+
+        // Getter
+        Review* getHead() const { return head; }
 };
 
 int main()
 {
-
+    vector<Movie> movieList {};
 
     return 0;
 }
