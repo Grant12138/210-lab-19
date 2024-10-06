@@ -52,15 +52,31 @@ class Movie
         Review* getHead() const { return head; }
 };
 
-Review generateReview(ifstream&);
+Review* generateReview(ifstream&, Review*);
 double randomRating();
 void stackReview(Review*&, Review&);
+
+const int NUM_OF_REVIEWS = 3;
+const int NUM_OF_MOVIES = 4;
 
 int main()
 {
     vector<Movie> movieList {};
 
     Review* movie1Head = nullptr;
+    populateReviews(movie1Head);
+
+    Review* movie2Head = nullptr;
+    populateReviews(movie2Head);
+
+    Review* movie3Head = nullptr;
+    populateReviews(movie3Head);
+
+    Review* movie4Head = nullptr;
+    populateReviews(movie4Head);
+
+    for (int i = 0; i < NUM_OF_MOVIES; i++)
+        movie
     ifstream finMovie1("movieReviews1.txt");
     try
     {
@@ -72,7 +88,7 @@ int main()
         cout << e << '\n';
         return 1;
     }
-    generateReview(finMovie1);
+
 
     Movie movie1 {"Movie 1", movie1Head};
 
@@ -80,14 +96,12 @@ int main()
     return 0;
 }
 
-Review generateReview(ifstream& fin)
+Review* generateReview(ifstream& fin, Review* aReview)
 {
-    Review* aReview = new Review {};
-
     aReview->rating = randomRating();
     getline(fin, aReview->comments);
 
-    return *aReview;
+    return aReview;
 }
 
 double randomRating()
@@ -103,6 +117,7 @@ void stackReview(Review*& head, Review& aReview)
         head = &aReview;
     else
     {
-        aReview.next
+        aReview.next = head;
+        head = &aReview;
     }
 }
