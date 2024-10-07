@@ -32,7 +32,7 @@ class Movie
             title = theTitle;
             head = hd;
         }
-        ~Movie()
+        ~Movie() // Memory management
         {
             Review* current = head;
             while (current != nullptr)
@@ -50,6 +50,7 @@ class Movie
         string getTitle() const { return title; }
 };
 
+// Function prototypes
 void generateReview(ifstream&, Review*);
 double randomRating();
 void stackReview(Review*&, Review*);
@@ -66,11 +67,13 @@ int main()
 {
     print_id("Lab 19: Abstract & Automate Lab 18");
 
+    // A vector of Movie pbjects
     vector<Movie> movieList {Movie("Kingsman"),
                              Movie("Kingsman 2"),
                              Movie("Star Wars"),
                              Movie("The Avengers")};
 
+    // Populate each movie with three reviews and display them
     for (auto& aMovie : movieList)
     {
         int i = 1;
@@ -89,15 +92,30 @@ int main()
     }
 
     cout << '\n';
-    return 0;
+    return 0; // Memory freed by Movie::destructor
 }
 
+/**************************************************************
+ * FUNCTION: generates one review
+ *
+ * @param fin
+ * @param aReview
+ *
+ * return: NONE;
+ */
 void generateReview(ifstream& fin, Review* aReview)
 {
     aReview->rating = randomRating();
     getline(fin, aReview->comments);
 }
 
+/*****************************************
+ * FUNCTION: generates a random rating for a review
+ *
+ * @param NONE;
+ *
+ * @return double;
+ */
 double randomRating()
 {
     random_device rd;
@@ -107,6 +125,14 @@ double randomRating()
     return round(dis(gen) * 10) / 10.0;
 }
 
+/**********************************************
+ * FUNCTION: adds a new review to the front of the linked list
+ *
+ * @param head
+ * @param aReview
+ *
+ * @return NONE;
+ */
 void stackReview(Review*& head, Review* aReview)
 {
     if (head == nullptr)
@@ -118,6 +144,13 @@ void stackReview(Review*& head, Review* aReview)
     }
 }
 
+/****************************************************
+ * FUNCTION: populates reviews for each movie
+ *
+ * @param movieHead
+ *
+ * @return NONE;
+ */
 void populateReviews(Review*& movieHead)
 {
     static int whichReview = 0;
