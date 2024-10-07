@@ -44,18 +44,17 @@ class Movie
         }
 
         // Setter
-        void setTitle(string theTitle) { title = theTitle; }
         void setHead(Review* hd) { head = hd; }
 
         // Getter
         string getTitle() const { return title; }
-        Review* getHead() const { return head; }
 };
 
 void generateReview(ifstream&, Review*);
 double randomRating();
 void stackReview(Review*&, Review*);
 void populateReviews(Review*&);
+void print_id(string const& lab_desc);
 
 const int NUM_OF_REVIEWS = 3;
 const string MOVIE_REVIEWS_LIST[] = {"movieReviews1.txt",
@@ -65,6 +64,8 @@ const string MOVIE_REVIEWS_LIST[] = {"movieReviews1.txt",
 
 int main()
 {
+    print_id("Lab 19: Abstract & Automate Lab 18");
+
     vector<Movie> movieList {Movie("Kingsman"),
                              Movie("Kingsman 2"),
                              Movie("Star Wars"),
@@ -87,6 +88,7 @@ int main()
         }
     }
 
+    cout << '\n';
     return 0;
 }
 
@@ -98,7 +100,11 @@ void generateReview(ifstream& fin, Review* aReview)
 
 double randomRating()
 {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> dis(1.0, 5.0);
 
+    return round(dis(gen) * 10) / 10.0;
 }
 
 void stackReview(Review*& head, Review* aReview)
@@ -136,4 +142,13 @@ void populateReviews(Review*& movieHead)
     fin.close();
 
     whichReview++;
+}
+
+void print_id(string const& lab_desc)
+{
+    cout << "\nCOMSC210 | Grant Luo | " << lab_desc << "\n";
+    cout << "Editor: CLion\n";
+    cout << "Compiler: Apple clang version 16.0.0\n";
+    cout << "File: " << __FILE__ << "\n";
+    cout << "Compiled: " << __DATE__ << " at " << __TIME__ << "\n\n";
 }
