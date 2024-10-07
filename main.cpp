@@ -4,7 +4,7 @@
 * Compiler: Apple clang version 16.0.0
 */
 #include <iostream>
-#include <ctime>
+#include <random>
 #include <vector>
 #include <fstream>
 using namespace std;
@@ -65,10 +65,10 @@ const string MOVIE_REVIEWS_LIST[] = {"movieReviews1.txt",
 
 int main()
 {
-    vector<Movie> movieList {Movie("Movie 1"),
-                             Movie("Movie 2"),
-                             Movie("Movie 3"),
-                             Movie("Movie 4")};
+    vector<Movie> movieList {Movie("Kingsman"),
+                             Movie("Kingsman 2"),
+                             Movie("Star Wars"),
+                             Movie("The Avengers")};
 
     for (auto& aMovie : movieList)
     {
@@ -79,9 +79,13 @@ int main()
         aMovie.setHead(aMovieHead);
 
         cout << aMovie.getTitle() << '\n';
-        cout << "    > Review #"
+        Review* current = aMovieHead;
+        while (current != nullptr)
+        {
+            cout << "    > Review #" << i++ << ": " << current->rating << ": " << current->comments << '\n';
+            current = current->next;
+        }
     }
-
 
     return 0;
 }
@@ -94,9 +98,7 @@ void generateReview(ifstream& fin, Review* aReview)
 
 double randomRating()
 {
-    srand(time(0));
 
-    return (rand() % 41 + 10) / 10.0;
 }
 
 void stackReview(Review*& head, Review* aReview)
@@ -131,4 +133,7 @@ void populateReviews(Review*& movieHead)
         generateReview(fin, aReview);
         stackReview(movieHead, aReview);
     }
+    fin.close();
+
+    whichReview++;
 }
