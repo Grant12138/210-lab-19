@@ -55,43 +55,28 @@ class Movie
 Review* generateReview(ifstream&, Review*);
 double randomRating();
 void stackReview(Review*&, Review&);
+void populateReviews(Review*& movieHead);
 
 const int NUM_OF_REVIEWS = 3;
 const int NUM_OF_MOVIES = 4;
+const string MOVIE_REVIEWS_LIST[] = {"movieReviews1.txt",
+                                     "movieReviews2.txt",
+                                     "movieReviews3.txt",
+                                     "movieReviews4.txt"};
 
 int main()
 {
-    vector<Movie> movieList {};
+    vector<Movie> movieList {Movie("Movie 1"),
+                             Movie("Movie 2"),
+                             Movie("Movie 3"),
+                             Movie("Movie 4")};
 
-    Review* movie1Head = nullptr;
-    populateReviews(movie1Head);
-
-    Review* movie2Head = nullptr;
-    populateReviews(movie2Head);
-
-    Review* movie3Head = nullptr;
-    populateReviews(movie3Head);
-
-    Review* movie4Head = nullptr;
-    populateReviews(movie4Head);
-
-    for (int i = 0; i < NUM_OF_MOVIES; i++)
-        movie
-    ifstream finMovie1("movieReviews1.txt");
-    try
+    for (auto& aMovie : movieList)
     {
-        if (!finMovie1.good())
-            throw "I/O error";
+        Review* aMovieHead = nullptr;
+        populateReviews(aMovieHead);
+        aMovie.setHead(aMovieHead);
     }
-    catch (const char* e)
-    {
-        cout << e << '\n';
-        return 1;
-    }
-
-
-    Movie movie1 {"Movie 1", movie1Head};
-
 
     return 0;
 }
@@ -119,5 +104,16 @@ void stackReview(Review*& head, Review& aReview)
     {
         aReview.next = head;
         head = &aReview;
+    }
+}
+
+void populateReviews(Review*& movieHead)
+{
+    static int whichReview = 0;
+
+
+    for (int i = 0; i < NUM_OF_REVIEWS; i++)
+    {
+
     }
 }
