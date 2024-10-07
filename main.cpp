@@ -52,13 +52,12 @@ class Movie
         Review* getHead() const { return head; }
 };
 
-Review* generateReview(ifstream&, Review*);
+void generateReview(ifstream&, Review*);
 double randomRating();
-void stackReview(Review*&, Review&);
-void populateReviews(Review*& movieHead);
+void stackReview(Review*&, Review*);
+void populateReviews(Review*&);
 
 const int NUM_OF_REVIEWS = 3;
-const int NUM_OF_MOVIES = 4;
 const string MOVIE_REVIEWS_LIST[] = {"movieReviews1.txt",
                                      "movieReviews2.txt",
                                      "movieReviews3.txt",
@@ -73,20 +72,24 @@ int main()
 
     for (auto& aMovie : movieList)
     {
+        int i = 1;
+
         Review* aMovieHead = nullptr;
         populateReviews(aMovieHead);
         aMovie.setHead(aMovieHead);
+
+        cout << aMovie.getTitle() << '\n';
+        cout << "    > Review #"
     }
+
 
     return 0;
 }
 
-Review* generateReview(ifstream& fin, Review* aReview)
+void generateReview(ifstream& fin, Review* aReview)
 {
     aReview->rating = randomRating();
     getline(fin, aReview->comments);
-
-    return aReview;
 }
 
 double randomRating()
@@ -96,14 +99,14 @@ double randomRating()
     return (rand() % 41 + 10) / 10.0;
 }
 
-void stackReview(Review*& head, Review& aReview)
+void stackReview(Review*& head, Review* aReview)
 {
     if (head == nullptr)
-        head = &aReview;
+        head = aReview;
     else
     {
-        aReview.next = head;
-        head = &aReview;
+        aReview->next = head;
+        head = aReview;
     }
 }
 
@@ -111,9 +114,21 @@ void populateReviews(Review*& movieHead)
 {
     static int whichReview = 0;
 
+    ifstream fin(MOVIE_REVIEWS_LIST[whichReview]);
+    try
+    {
+        if (!fin.good()) throw "I/O error";
+    }
+    catch (const char* e)
+    {
+        cout << e << '\n';
+        exit(1);
+    }
 
     for (int i = 0; i < NUM_OF_REVIEWS; i++)
     {
-
+        Review* aReview = new Review {};
+        generateReview(fin, aReview);
+        stackReview(movieHead, aReview);
     }
 }
